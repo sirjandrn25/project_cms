@@ -3,7 +3,7 @@ import imp
 from unicodedata import category
 from django.shortcuts import render,redirect
 from django.views import View
-from .models import *
+from project.models import *
 from django.contrib import messages
 
 def index(request):
@@ -13,6 +13,17 @@ def index(request):
 class CategoryView(View):
     def get(self,request):
         categories = Category.objects.all()
+        query = request.GET.get('query')
+
+        if query:
+            categories = Category.objects.filter(category_name=query)
+        limit = request.GET.get('limit')
+        
+        limit = int(limit) if limit else 5
+
+
+        categories = list(categories)[:limit]
+        
         context = {
             'categories':categories
         }

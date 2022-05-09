@@ -64,9 +64,9 @@
                 
                 <div class="col-4 d-flex align-items-center">
                   <span class="h5">Show</span>
-                  <select class="form-select" aria-label="Default select example">
+                  <select class="form-select" name="limit" aria-label="Default select example">
+                    <option value="5">5</option>
                     <option value="10">10</option>
-                    <option value="20">20</option>
                     <option value="30">30</option>
                   </select>
                   <span class="h5">Entries</span>
@@ -79,6 +79,7 @@
                       placeholder="search categories"
                       aria-label="search categories"
                       aria-describedby="button-addon2"
+                      name="query"
                     />
                     <button type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2">Apply</button>
                   </div>
