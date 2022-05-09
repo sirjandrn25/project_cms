@@ -1,4 +1,5 @@
 from multiprocessing.reduction import duplicate
+from winreg import QueryInfoKey
 from django.shortcuts import render,redirect
 from django.views import View
 from ..forms import *
@@ -7,8 +8,32 @@ from django.contrib import messages
 
 class ProjectView(View):
     def get(self,request):
+        projects = Project.objects.all()
+        query = request.GET.get('query')
+        status = request.GET.get('status')
+        if status:
+            if status == 'active':
+                projects = Project.objects.filter(is_active=True)
+            elif status == "deactive":
+                projects = Project.objects.filter(is_active=False)
+            
+            elif status == "trash":
+                projects = Project.objects.filter(trash=True)
 
-        return render(request,"projects/index.html")
+        limit = request.GET.get('limit')
+
+        limit = int(limit) if limit else 5
+        if query:
+            projects = Project.objects.filter(project_name=query)
+        context = {
+            'projects':list(projects)[:limit],
+            'all':len(Project.objects.all()),
+            "active":len(Project.objects.filter(is_active=True)),
+            'inactive':len(Project.objects.filter(is_active=False)),
+            'trash':len(Project.objects.filter(trash=True)),
+
+        }
+        return render(request,"projects/index.html",context)
     
 
 class AddProjectView(View):

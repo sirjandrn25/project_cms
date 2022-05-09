@@ -1,0 +1,92 @@
+{% extends 'base/layout.html' %}
+{% load custom_filter %}
+{% block main_content %}
+
+    <div class="container py-3 my-5">
+        <div class="d-flex justify-content-between">
+            <h4>Project View</h4>
+            <a href="{% url 'add_project' %}" class="btn btn-outline-primary">add new project</a>
+        </div>
+        <hr>
+
+        <ul class="nav justify-content-center mb-3">
+            <li class="nav-item">
+              <a class="nav-link {{request|active_filter:'all'}}" aria-current="page" href="/project/">All({{all}})</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{request|active_filter:'active'}} " href="/project/?status=active">Active({{active}})</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{request|active_filter:'deactive'}}" href="/project/?status=deactive">In Active({{inactive}})</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{request|active_filter:'trash'}}" href="/project/?status=trash">Trash({{trash}})</a>
+              </li>
+          
+          </ul>
+          <hr>
+        <!-- for searching and limit  -->
+        <form action="" class="mb-3">
+            <div class="row">
+
+            
+            <div class="col-3 d-flex align-items-center">
+              <span class="h5">Show</span>
+              <select class="form-select" name="limit" aria-label="Default select example">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="30">30</option>
+              </select>
+              <span class="h5">Entries</span>
+            </div>
+            <div class="col-4 d-flex justify-content-end">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="search categories"
+                  aria-label="search categories"
+                  aria-describedby="button-addon2"
+                  name="query"
+                />
+                <button type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2">Apply</button>
+              </div>
+            </div>
+        </div>
+          </form>
+
+        <!-- details of projects  -->
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">SNo.</th>
+                <th scope="col">Project Title</th>
+                <th scope="col">Budget</th>
+                <th scope="col">Progress</th>
+                <th scope="col">Technology</th>
+                <th scope="col">Company</th>
+                <th scope="col">Start Date</th>
+                <!-- <th scope="col">End Date</th> -->
+                
+              </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{project.project_name}}</td>
+                    <td>${{project.budget}}</td>
+                    <td>{{project.progress}}</td>
+                    <td>{{project.technology}}</td>
+                    <td>{{project.company}}</td>
+                    <td>{{project.start_date}}</td>
+
+                  </tr>
+                {% endfor %}
+              
+              
+            </tbody>
+          </table>
+
+    </div>
+{% endblock main_content %}
