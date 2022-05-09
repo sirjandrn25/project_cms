@@ -1,0 +1,118 @@
+{% extends 'base/layout.html' %} {% block main_content %}
+<div class="container my-5 py-3">
+  <div class="row d-flex justify-content-center">
+    <div class="col-8 card p-4">
+      <div class="header d-flex justify-content-between">
+        <div>
+          <h4>Categories</h4>
+          {% for message in messages %}
+            <div class="alert alert-primary">{{message}}</div>
+          {% endfor %}
+        </div>
+        <div>
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-warning text-white"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Add
+          </button>
+
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-center" id="exampleModalLabel">Add Category</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="" method="post">
+                      {% csrf_token %}
+                    <div class="mb-3">
+                      <label for="id_category" class="form-label">Category Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="id_category"
+                        name="category_name"
+                        placeholder="Enter Category Name"
+                      />
+                    </div>
+                    <button type="submit" class="btn btn-warning">Create</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card p-2 w-100 my-3">
+        <div class="card-header bg-white p-2">
+          
+            <form action="">
+                <div class="row">
+
+                
+                <div class="col-4 d-flex align-items-center">
+                  <span class="h5">Show</span>
+                  <select class="form-select" aria-label="Default select example">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                  </select>
+                  <span class="h5">Entries</span>
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="search categories"
+                      aria-label="search categories"
+                      aria-describedby="button-addon2"
+                    />
+                    <button type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2">Apply</button>
+                  </div>
+                </div>
+            </div>
+              </form>
+          
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Sno</th>
+                <th scope="col">Catgory</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for category in categories %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{category.category_name}}</td>
+                <td>
+                  <a href="{% url 'delete_category' category.id %}" class="btn btn-sm btn-outline-danger mx-2">delete</a>
+                  <a href="{% url 'update_category' category.id %}" class="btn btn-sm btn-outline-primary">edit</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock main_content %}
