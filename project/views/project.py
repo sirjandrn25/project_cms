@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect
 from django.views import View
 from ..forms import *
 from django.contrib import messages
+from project.models import *
 
 
 class ProjectView(View):
@@ -51,10 +52,17 @@ class AddProjectView(View):
     def post(self,request):
         form = ProjectAddForm(request.POST)
         documents = request.FILES.getlist('document')
+        ref_links = request.POST.getlist('ref_link')
+        
         if form.is_valid():
             project = form.save()
+            # save documents 
             for document in documents:
                 ProjectDocument.objects.create(document=document,project=project)
+
+            # save reference links 
+            for ref_link in ref_links:
+                ReferenceLink.objects.create(ref_link=ref_link,project=project)
 
             messages.info(request,"successfully create new project")
             return redirect("add_project")

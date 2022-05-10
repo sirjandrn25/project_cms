@@ -43,7 +43,7 @@ class Project(models.Model):
     trash = models.BooleanField(default=False)
     description = models.TextField(blank=True)
     skills = models.ManyToManyField(Skill)
-    ref_link = models.CharField(max_length=300,blank=True)
+    # ref_link = models.CharField(max_length=300,blank=True)
 
     def __str__(self):
         return self.project_name
@@ -61,15 +61,15 @@ class ProjectDocument(DateTracker):
     document = models.FileField(upload_to="documents/")
 
     def __str__(self):
+        return f"{self.project.project_name}>> {self.created_date}"
+
+
+class ReferenceLink(DateTracker):
+    project = models.ForeignKey(Project,on_delete=models.CASCADE,related_name="projects")
+    ref_link = models.CharField(max_length=300)
+
+    def __str__(self):
         return self.project.project_name
-
-
-# class ReferenceLink(DateTracker):
-#     project = models.ForeignKey(Project,on_delete=models.CASCADE,related_name="projects")
-#     ref_link = models.CharField(max_length=300)
-
-#     def __str__(self):
-#         return self.project.project_name
     
 
 

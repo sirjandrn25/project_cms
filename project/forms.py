@@ -10,7 +10,7 @@ class ProjectAddForm(forms.ModelForm):
         exclude =("end_date","progress","is_active","trash")
         widgets = {
             'project_name':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter Project Name'}),
-            'ref_link':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter reference link'}),
+            # 'ref_link':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter reference link'}),
             'category':forms.Select(attrs={'class':'form-select','placeholder':'select category'}),
             'price_type':forms.Select(attrs={'class':'form-select','placeholder':'select suitable price'}),
             'start_date':forms.DateInput(attrs={'class':'form-control','type':'date','placeholder':'select suitable date'}),
