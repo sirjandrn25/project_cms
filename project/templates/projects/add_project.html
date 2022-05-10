@@ -2,7 +2,7 @@
 
 {% block main_content %}
 
-<div class="containerpy-3 my-3">
+<div class="container py-3 my-3">
 
     
     <div class="row d-flex justify-content-center" >
@@ -73,8 +73,10 @@
                     {{form.ref_link}}
                 </div>
                 <div class="mb-3">
-                    {{form.description.label_tag}}
-                    {{form.description}}
+                    <!-- {{form.description.label_tag}}
+                    {{form.description}} -->
+                    <textarea id="mytextarea" name="description">write project description</textarea>
+                   
                 </div>
                 <button type="submit" class="btn btn-outline-success">create</button>
             </form>
@@ -82,5 +84,6 @@
     </div>
 
 </div>
+
 
 {% endblock main_content %}
